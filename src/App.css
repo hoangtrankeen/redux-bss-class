@@ -1,4 +1,28 @@
-.list-group-item:hover {
-    text-decoration: line-through;
+.list-group-item:hover .action-delete{
+   display: block;
+}
+
+.action-delete {
+    display: none;
     cursor: pointer;
+}
+
+.list-group-item {
+    display: flex;
+    flex-direction: row;
+    flex-basis: auto;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.Complete {
+    text-decoration: line-through;
+    opacity: 0.2;
+    cursor: pointer;
+}
+
+.Incomplete {
+    cursor: pointer;
+    color: darkred;
 }
