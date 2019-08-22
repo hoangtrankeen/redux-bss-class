@@ -15,30 +15,25 @@ class Todo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            todo: this.props.todo,
-            filter: this.props.filter,
             input: ''
         };
-
-        console.log(this.state)
     }
-
 
     filterTodo = (filter) => {
         switch (filter) {
             case VISIBILITY_FILTERS.COMPLETED:
-                return this.state.todo.filter(todo => todo.complete);
+                return this.props.todo.filter(todo => todo.complete);
             case VISIBILITY_FILTERS.INCOMPLETE:
-                return this.state.todo.filter(todo => !todo.complete);
+                return this.props.todo.filter(todo => !todo.complete);
             case VISIBILITY_FILTERS.ALL:
-                return this.state.todo;
+                return this.props.todo;
             default:
-                return this.state.todo;
+                return this.props.todo;
         }
     }
 
     listTodos = () => {
-        let todo = this.filterTodo(this.state.filter);
+        let todo = this.filterTodo(this.props.filter);
         return (
             <ul className="list-group">
                 {
@@ -65,7 +60,7 @@ class Todo extends React.Component {
     renderFilter = () => {
         return <div className="visibility-filters mb-2">
             {Object.keys(VISIBILITY_FILTERS).map(filterKey => {
-                let activeButton = VISIBILITY_FILTERS[filterKey] === this.state.filter ?
+                let activeButton = VISIBILITY_FILTERS[filterKey] === this.props.filter ?
                     'btn-success' : 'btn-default'
                 const currentFilter = VISIBILITY_FILTERS[filterKey];
                 return (
@@ -79,8 +74,6 @@ class Todo extends React.Component {
     }
 
     render() {
-        console.log(this.state)
-
         return (
             <div className="container mt-5 mlr-5 ">
                 <div className="row">
