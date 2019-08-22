@@ -1,5 +1,6 @@
-export const setFilter = (filter,dispatch) => {
-    dispatch({
+export const setFilter = (filter) => {
+    return {
         type: 'SET_FILTER',
         payload: {filter}
-    })};
+    }
+};

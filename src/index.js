@@ -101,10 +101,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        handleAddTodo: (item) => {handleAddTodo(item, dispatch)},
-        handleDelete: (item) => {handleDelete(item, dispatch)},
-        toggleTodo: (item) => {toggleTodo(item, dispatch)},
-        setFilter: (item) => {setFilter(item, dispatch)}
+        handleAddTodo: (item) => dispatch(handleAddTodo(item)),
+        handleDelete: (item) => dispatch(handleDelete(item)),
+        toggleTodo: (item) => dispatch(toggleTodo(item)),
+        setFilter: (item) => dispatch(setFilter(item))
     }
 }
 

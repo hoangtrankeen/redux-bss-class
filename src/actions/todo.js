@@ -1,21 +1,21 @@
 //Action Creator
-export const handleAddTodo = (item, dispatch) => {
-    dispatch({
-        type: "ADD",
-        payload: item
-    });
+export const handleAddTodo = (item) => {
+   return {
+       type: "ADD",
+       payload: item
+   }
 }
 
-export const  handleDelete = (item, dispatch) => {
-    dispatch({
+export const  handleDelete = (item) => {
+    return {
         type: "DELETE",
         payload: item
-    });
+    };
 }
 
-export const  toggleTodo = (item, dispatch) => {
-    dispatch({
+export const  toggleTodo = (item) => {
+    return {
         type: "TOGGLE",
         payload: item
-    })
+    }
 }
