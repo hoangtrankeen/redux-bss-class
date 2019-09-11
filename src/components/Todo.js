@@ -7,11 +7,15 @@ import Spinner from "../components/Spinner";
 
 class Todo extends React.Component {
 
+    //When component mounted, dispatch action to call api
     componentDidMount() {
+        //Component that connect to redux, can dispatch action from anywhere
+        //by using this.props.dispatch
         const dispatch = this.props.dispatch;
         dispatch(fetchTodoList())
     }
 
+    //Display todoList data (show spinner if data is empty)
     listingTodos = () => {
         if(!this.props.isFetching &&  this.props.todoList.length > 0) {
             return (
@@ -47,7 +51,9 @@ class Todo extends React.Component {
                         <button className="mt-2 btn btn-primary btn-block">Add Todo</button>
                     </div>
                     <div className="col-md-6">
+                        {/*Show the data*/}
                         <h2>List of todos</h2>
+
                         {this.listingTodos()}
                     </div>
                 </div>
@@ -56,14 +62,19 @@ class Todo extends React.Component {
     }
 }
 
+//Select data from state
+//It is called every time the store state changes.
+//It returns an object of data this component needs,
+// for example: component can access todoList state by using this.props.todoList
+
 const mapStateToProps = (state) => {
    return {
        todoList: state.todo.todoList,
        isFetching: state.todo.isFetching,
-       errors: state.todo.errors
    }
 }
 
+//Connect redux
 export default Todo = connect(
     mapStateToProps,
 )(Todo)

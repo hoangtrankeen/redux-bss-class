@@ -8,6 +8,7 @@ import {rootReducer} from './reducers'
 import {Provider} from 'react-redux'
 import App from './App'
 
+//Create Store and Apply thunk middleware
 let store = createStore(rootReducer, applyMiddleware(thunk));
 
 const rootElement = document.getElementById("root");

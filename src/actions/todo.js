@@ -1,7 +1,10 @@
 export const fetchTodoList =  () => {
+
     return async dispatch => {
+        // dispatch action to show spinner
         dispatch(isFetchingTodo());
 
+        // after fetching data success, dispatch action to turn off spinner and show data
         try {
             const response = await fetch(`https://jsonplaceholder.typicode.com/todos`);
             const responseBody = await response.json();
