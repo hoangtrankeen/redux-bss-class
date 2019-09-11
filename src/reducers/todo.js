@@ -1,33 +1,22 @@
 //TodoReducer
-let defaultState = [];
+let defaultState = {
+    todoList: [],
+    isFetching: false,
+};
 
 const todo = (state = defaultState, action) => {
     switch(action.type){
-        case "ADD":
-            let newItem = {
-                id: Math.floor(Math.random() * new Date()),
-                name: action.payload,
-                complete: false
-            };
-            let newState2 = [...state, newItem];
-            console.log(newState2)
+        case "IS_FETCHING":
+            return Object.assign({}, state, {
+                todoList: action.payload,
+                isFetching: true
+            });
+        case "FETCH_SUCCESS":
+            return Object.assign({}, state, {
+                todoList: action.payload,
+                isFetching: false
+            });
 
-            return newState2;
-        case "DELETE":
-            return state.filter((item) => {
-                return item.id !== action.payload
-            });
-        case "TOGGLE":
-            let newState =  [...state];
-            let updateTodo = newState.map((item) => {
-                return item.id === action.payload ? {
-                    id: item.id,
-                    name: item.name,
-                    complete: !item.complete
-                } : item
-            });
-            console.log(updateTodo)
-            return updateTodo
         default:
             return state;
     }

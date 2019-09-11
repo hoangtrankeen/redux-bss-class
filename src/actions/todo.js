@@ -1,21 +1,29 @@
-//Action Creator
-export const handleAddTodo = (item) => {
-   return {
-       type: "ADD",
-       payload: item
-   }
-}
+export const fetchTodoList =  () => {
+    return async dispatch => {
+        dispatch(isFetchingTodo());
 
-export const  handleDelete = (item) => {
-    return {
-        type: "DELETE",
-        payload: item
+        try {
+            const response = await fetch(`https://jsonplaceholder.typicode.com/todos`);
+            const responseBody = await response.json();
+            dispatch(fetchTodoSuccess(responseBody));
+        }
+        catch(err)  {
+            console.log(err.message);
+        }
+
     };
 }
 
-export const  toggleTodo = (item) => {
+
+const isFetchingTodo = () => {
     return {
-        type: "TOGGLE",
-        payload: item
+        type: "IS_FETCHING"
+    }
+}
+
+const fetchTodoSuccess = (data) => {
+    return {
+        type: "FETCH_SUCCESS",
+        payload: data
     }
 }

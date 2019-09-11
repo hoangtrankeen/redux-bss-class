@@ -1,12 +1,10 @@
 import React from 'react';
-import logo from './logo.svg';
-import {createStore} from 'redux'
-import Todos from "./components/Todos";
-import todos from "./reducers"
+import Todo from "./components/Todo";
+
 function App() {
   return (
     <div className="App">
-        <Todos/>
+        <Todo/>
     </div>
   );
 }
