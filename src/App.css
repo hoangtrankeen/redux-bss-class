@@ -1,10 +1,11 @@
-.list-group-item:hover .action-delete{
-   display: block;
-}
+
 
 .action-delete {
-    display: none;
     cursor: pointer;
+}
+
+.App {
+    padding: 30px 50px 50px;
 }
 
 .list-group-item {
@@ -17,12 +18,37 @@
 }
 
 .Complete {
-    text-decoration: line-through;
-    opacity: 0.2;
-    cursor: pointer;
+    color: lightblue;
 }
 
 .Incomplete {
+    color: firebrick;
+}
+
+
+.Spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+}
+
+.is-loading {
+    opacity: 0.5;
+}
+
+.toolbar-action {
+    float: right;
+}
+
+.toolbar-action span {
     cursor: pointer;
-    color: darkred;
+    margin: 0 10px;
+}
+
+.toolbar-action {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }

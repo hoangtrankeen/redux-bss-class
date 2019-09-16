@@ -1,11 +1,17 @@
 import React from "react";
 import '../App.css';
-import {fetchTodoList} from "../actions/todo";
+import {fetchTodoList, addTodoItem, toggleTodoItem, deleteTodo} from "../actions/todo";
 import {connect} from 'react-redux'
 import Spinner from "../components/Spinner";
+import todo from "../reducers/todo";
 
 
 class Todo extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.inputTodo = '';
+    }
 
     //When component mounted, dispatch action to call api
     componentDidMount() {
@@ -17,7 +23,7 @@ class Todo extends React.Component {
 
     //Display todoList data (show spinner if data is empty)
     listingTodos = () => {
-        if(!this.props.isFetching &&  this.props.todoList.length > 0) {
+        if(this.props.todoList.length > 0) {
             return (
                 <ul className="list-group">
                     {
@@ -27,10 +33,18 @@ class Todo extends React.Component {
                             return (
                                 <li  className="list-group-item"
                                      key={key}>
-                                <span className={completed}
-                                >{item.title}</span>
-                                    <span className="action-delete">
-                                    <i className="far fa-times-circle"/></span>
+                                    <span>{item.title}</span>
+                                    <div className="toolbar-action">
+                                        <span  className={completed}
+                                               onClick={() => this.handleToggle(!item.completed , item.id )}>
+
+                                            {!item.completed ? <span className="badge badge-warning">Pending</span> :
+                                                <span className="badge badge-success">Done</span>}
+                                        </span>
+                                        <span
+                                        onClick={() => this.handleDelete(item.id)}
+                                        ><i className="fas fa-trash-alt"/></span>
+                                    </div>
                                 </li>
                             )
                         })
@@ -40,15 +54,44 @@ class Todo extends React.Component {
         }
         return <Spinner/>
     }
+    //DeleteTodo
+    handleDelete = (todoId) => {
+        this.props.dispatch(deleteTodo(todoId))
+    }
+
+    //toggleItem
+    handleToggle = (isCompleted, todoId) => {
+        this.props.dispatch(toggleTodoItem(isCompleted, todoId))
+    }
+
+    //Add todo item
+    handleAddTodo = () => {
+        this.props.dispatch(addTodoItem(this.inputTodo.value))
+        this.inputTodo.value = '';
+    }
+
+    shouldShowLoading = () => {
+        if (this.props.isLoading ) {
+            this.addBodyClass('is-loading')
+            return <Spinner/>
+        }
+        this.removeBodyClass('is-loading')
+
+    }
+
+    addBodyClass = className => document.body.classList.add(className);
+    removeBodyClass = className => document.body.classList.remove(className);
 
 
     render() {
         return (
             <div className="container mt-5 mlr-5 ">
+                {this.shouldShowLoading()}
                 <div className="row">
                     <div className=" col-md-6">
-                        <input className="form-control"  />
-                        <button className="mt-2 btn btn-primary btn-block">Add Todo</button>
+                        <input className="form-control" ref={target => this.inputTodo = target} />
+                        <button className="mt-2 btn btn-primary btn-block"
+                                onClick={this.handleAddTodo}>Add Todo</button>
                     </div>
                     <div className="col-md-6">
                         {/*Show the data*/}
@@ -68,10 +111,10 @@ class Todo extends React.Component {
 // for example: component can access todoList state by using this.props.todoList
 
 const mapStateToProps = (state) => {
-   return {
-       todoList: state.todo.todoList,
-       isFetching: state.todo.isFetching,
-   }
+    return {
+        todoList: state.todo.todoList,
+        isLoading: state.todo.isLoading,
+    }
 }
 
 //Connect redux

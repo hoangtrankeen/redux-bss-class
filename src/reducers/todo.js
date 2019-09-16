@@ -1,7 +1,7 @@
 //TodoReducer
 let defaultState = {
     todoList: [],
-    isFetching: false,
+    isLoading: false,
 };
 
 // Can also use this technique to update state
@@ -13,14 +13,46 @@ let defaultState = {
 
 const todo = (state = defaultState, action) => {
     switch(action.type){
-        case "IS_FETCHING":
+        case "IS_LOADING":
             return Object.assign({}, state, {
-                isFetching: true
+                isLoading: true
             });
         case "FETCH_SUCCESS":
             return Object.assign({}, state, {
-                todoList: action.payload,
-                isFetching: false
+                todoList: action.payload.slice(1,10),
+                isLoading: false
+            });
+        case "ADDED_SUCCESS":
+            return Object.assign({}, state, {
+                todoList: [
+                    ...state.todoList,
+                    action.payload
+                ],
+                isLoading: false
+            });
+        case "TOGGLE_SUCCESS":
+            const todo = [...state.todoList];
+            const updateTodo = todo.map((item) => {
+                return item.id === action.payload.id ? {
+                    id: action.payload.id,
+                    userId: action.payload.userId,
+                    title: action.payload.title,
+                    completed: action.payload.completed
+                } : item
+            });
+            return Object.assign({}, state, {
+                todoList: updateTodo,
+                isLoading: false
+            });
+
+        case "DELETED_SUCCESS":
+            const todoList = [...state.todoList];
+            const newTodo = todoList.filter((item) => {
+                return item.id !== action.payload
+            })
+            return Object.assign({}, state, {
+                todoList: newTodo,
+                isLoading: false
             });
 
         default:
